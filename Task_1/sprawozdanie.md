@@ -1,22 +1,24 @@
-Sprawozdanie: Klasyfikacja kwiatów Iris
-Indeks: 119066
-Metoda: Algorytm KNN (K-Nearest Neighbors)
+# Sprawozdanie: Klasyfikacja zbioru Iris
+**Indeks:** 119066  
+**Grupa:** 1 (Indeks parzysty - Klasyfikacja algorytmem KNN)
 
-1. O danych
-W projekcie wykorzystałem zbiór 150 próbek irysów. Każdy kwiat opisany jest przez cztery cechy: długość i szerokość płatka oraz działki kielicha. Dane dzielą się na trzy gatunki: Setosa, Versicolour i Virginica.
+### 1. Krótka analiza danych
+Zbiór danych Iris składa się z 150 próbek (po 50 dla każdego z trzech gatunków: *Setosa*, *Versicolour*, *Virginica*). Każda próbka opisana jest czterema atrybutami geometrycznymi (długość i szerokość płatka oraz działki kielicha). Analiza wstępna wykazała, że klasa *Setosa* jest liniowo separowalna od pozostałych, natomiast cechy klas *Versicolour* i *Virginica* w dużej mierze się przenikają.
 
-2. Model i badanie
-Wybrałem algorytm KNN z parametrem K=3. Program uczył się na 80% danych, a pozostałe 20% służyło do sprawdzenia, czy potrafi on poprawnie rozpoznać gatunek.
+![Wykresy zbioru (Pairplot)](pairplot_iris.png)
 
-3. Wyniki i wykres
-Model uzyskał 100% skuteczności (wynik 1.00 we wszystkich metrykach). Na wykresie widać, że czerwona grupa (Setosa) jest wyraźnie oddzielona, co ułatwiło zadanie komputerowi. Pozostałe dwie grupy są bliżej siebie, ale algorytm i tak bezbłędnie je rozróżnił.
+### 2. Wyniki klasyfikacji (KNN, K=3)
+Dane zostały podzielone na zbiór treningowy (80%) i testowy (20%). Użyto algorytmu K-Nearest Neighbors z parametrem $K=3$. Model został oceniony na zbiorze testowym (30 próbek), uzyskując maksymalne wyniki we wszystkich wymaganych metrykach:
+* **Accuracy (Dokładność):** 1.00
+* **Precision (Precyzja):** 1.00
+* **Recall (Czułość):** 1.00
+* **F1-score:** 1.00
 
-Wnioski z projektu
-Skuteczność algorytmu: Algorytm KNN świetnie radzi sobie ze zbiorami danych takimi jak Iris, osiągnął on maksymalną precyzję.
+### 3. Wizualizacja t-SNE i Wnioski
+Zredukowano 4-wymiarowe dane do 2 wymiarów za pomocą algorytmu t-SNE. Na poniższym wykresie:
+* **Kształty** oznaczają prawdziwy gatunek kwiatu z oryginalnego zbioru.
+* **Kolory** oznaczają klasę przypisaną przez wyuczony model KNN.
 
+![Wizualizacja t-SNE po klasyfikacji KNN](tsne_knn_iris.png)
 
-Wizualizacja: Dzięki technice t-SNE mogliśmy zobaczyć 4-wymiarowe dane na płaszczyźnie, co pozwoliło zrozumieć, jak działał model.
-
-Podział danych: Zastosowanie podziału na zbiór treningowy i testowy pozwoliło ocenić, że model faktycznie potrafi klasyfikować nowe dane, a nie tylko te, które już widział.
-
-Narzędzia: Biblioteki takie jak scikit-learn i pandas znacznie upraszczają proces budowania modeli machine learningowych nawet dla początkujących.
+**Krytyczny wniosek:** Wynik 1.00 w metrykach na zbiorze testowym jest w tym przypadku rezultatem małej próby badawczej (zaledwie 30 losowych próbek, które ułożyły się korzystnie). Wykres t-SNE dla całego zbioru obnaża prawdziwą naturę danych – o ile klasa *Setosa* jest całkowicie oddzielona, to kształty reprezentujące klasy *Versicolour* i *Virginica* fizycznie na siebie nachodzą. Oznacza to, że idealny wynik na zbiorze testowym jest zbyt optymistyczny, a w strefie granicznej tych dwóch gatunków model nieuchronnie będzie popełniał błędy przy wprowadzaniu nowych danych.
